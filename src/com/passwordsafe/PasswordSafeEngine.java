@@ -29,6 +29,10 @@ public class PasswordSafeEngine {
                 .collect(Collectors.toList()).toArray(new String[0]);
     }
     public void AddNewPassword(PasswordInfo info) throws IOException, Exception {
+        File directory = new File(path);
+        if (!directory.isDirectory() && !directory.mkdir()) {
+            throw new Exception("Unable to create directory");
+        }
         File storage = (this.GetFileFromName(info.getName()));
         if (storage.createNewFile()) {
            this.WriteToFile(storage.getPath(), info.getPlain());
