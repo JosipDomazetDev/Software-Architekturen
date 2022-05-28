@@ -6,12 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MasterPasswordRepository {
-    private static MasterPasswordRepository instance = new MasterPasswordRepository("");
     private String masterPasswordPath;
-    public static MasterPasswordRepository GetInstance() {
-        return new MasterPasswordRepository("");
-    }
-    private String masterPasswordPlain;
+
     public MasterPasswordRepository(String masterPasswordPath) {
         this.masterPasswordPath = masterPasswordPath;
     }
