@@ -1,48 +1,38 @@
 package com.passwordsafe;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.passwordsafe.datasourcelayer.IDataSourceLayer;
+
+import java.util.InputMismatchException;
 
 public class MasterPasswordRepository {
-    private String masterPasswordPath;
+    private final IDataSourceLayer dataLayer;
 
-    public MasterPasswordRepository(String masterPasswordPath) {
-        this.masterPasswordPath = masterPasswordPath;
+    public MasterPasswordRepository(IDataSourceLayer dataLayer) {
+        this.dataLayer = dataLayer;
     }
     public void setMasterPasswordPlain(String masterPassword) throws Exception {
         this.StoreMasterPasswordToFile(masterPassword);
     }
-    public String getMasterPasswordPlain() throws Exception {
-        return this.GetMasterPasswordFromFile();
+
+    public void resetMasterPasswordPlain(String masterPassword, String masterPasswordRepeated) throws Exception {
+        if(!masterPasswordRepeated.equals(masterPassword)){
+            throw new InputMismatchException("Passwords do not match!");
+        }
+
+        this.setMasterPasswordPlain(masterPassword);
     }
+
     public boolean MasterPasswordIsEqualTo(String masterPassword) throws Exception {
         return masterPassword.equals(this.GetMasterPasswordFromFile());
     }
     private String GetMasterPasswordFromFile() throws Exception {
-        File passwordFile = new File(this.masterPasswordPath);
-        char[] buffer = null;
-        if (passwordFile.exists()) {
-            FileReader reader = null;
-            try {
-                buffer = new char[(int)passwordFile.length()];
-                reader = new FileReader(passwordFile);
-                reader.read(buffer);
-            }
-            finally {
-                if (reader != null) { try { reader.close(); } catch (IOException ex) { } };
-            }
-        }
-        return buffer == null ? null : new String(buffer);
+        return dataLayer.getMasterPassword();
     }
     private void StoreMasterPasswordToFile(String masterPassword) throws Exception {
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(this.masterPasswordPath);
-            writer.write(masterPassword);
-        } finally {
-            if (writer != null) try { writer.close(); } catch (IOException ignore) {}
-        }
+        dataLayer.storeMasterPassword(masterPassword);
+    }
+
+    public void purgeAllPasswords() {
+        dataLayer.purgeAllPasswords();
     }
 }

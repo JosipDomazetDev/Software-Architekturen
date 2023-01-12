@@ -1,0 +1,23 @@
+@startuml
+
+component Main as Main
+component IPasswordEventSubscriber as IPasswordEventSubscriber
+component [EventManager] as EventManager
+
+interface "subscribe" as subscribe
+interface "notify" as notify
+interface "update" as update
+subscribe - [EventManager]
+notify -left- [EventManager]
+update - [IPasswordEventSubscriber]
+
+[Main] ..> subscribe : use
+[Main] ..> notify : use
+[EventManager] ..> update : use
+
+note right of [IPasswordEventSubscriber]
+  ResetPasswordSubscriber and WrongPasswordSubscriber are
+  just concrete implementations of IPasswordEventSubscriber
+end note
+
+@enduml

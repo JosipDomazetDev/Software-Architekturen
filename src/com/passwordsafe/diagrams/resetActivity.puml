@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Benutzer gibt 6 ein => Passwort Reset;
+:Neues Passwort einlesen;
+:Passwort erneut einlesen;
+:resetMasterPasswordPlain(masterPassword, masterPasswordRepeated);
+if (Passwörter gleich?) then (true)
+  :setMasterPasswordPlain(masterPassword);
+  :Alte Daten löschen;
+
+else (false)
+  :throw InputMismatchException(masterPassword);
+  :Fehlermeldung anzeigen;
+endif
+
+  :Wieder auf Benutzereingabe warten...;
+
+
+
+@enduml
