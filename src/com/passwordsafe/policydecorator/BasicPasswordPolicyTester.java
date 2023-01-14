@@ -3,15 +3,15 @@ package com.passwordsafe.policydecorator;
 public class BasicPasswordPolicyTester implements IPasswordPolicyTester {
     @Override
     public boolean fulfilsPolicy(String password) {
-        // Add some base level policies here
-        // Ich hab alle Regeln in eigenen decoratorn implementiert ("each rule is implemented by a separate decorator.")
-        // Daher returnt diese Methode nur true.
-        return true;
+        // Nach Email-Rücksprache habe ich entschieden R1 (UpperCase-Regel) als BasicPasswordPolicyTester zu implementieren,
+        // damit der BasicTester auch eine Logik enthält. (R1 ist sowieso immer verpflichtend zu erfüllen)
+
+        // The password must contain at least one upper case character
+        return password.matches(".*[A-Z].*");
     }
 
     @Override
     public String getPolicyMsg() {
-        // Add some base level policy msg here
-        return "";
+        return "* The password must contain at least one upper case character.\n";
     }
 }

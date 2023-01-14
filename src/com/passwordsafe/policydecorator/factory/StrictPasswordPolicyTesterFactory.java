@@ -9,8 +9,6 @@ public class StrictPasswordPolicyTesterFactory implements PasswordPolicyTesterFa
                 new BasicPasswordPolicyTester();
 
         passwordPolicyTester =
-                new UpperCasePasswordPolicyTester(passwordPolicyTester);
-        passwordPolicyTester =
                 new SpecialCharPasswordPolicyTester(passwordPolicyTester);
         passwordPolicyTester =
                 new LengthPasswordPolicyTester(passwordPolicyTester);

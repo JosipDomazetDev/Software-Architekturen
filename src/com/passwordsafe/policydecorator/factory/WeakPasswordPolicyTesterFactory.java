@@ -9,8 +9,6 @@ public class WeakPasswordPolicyTesterFactory implements PasswordPolicyTesterFact
                 new BasicPasswordPolicyTester();
 
         passwordPolicyTester =
-                new UpperCasePasswordPolicyTester(passwordPolicyTester);
-        passwordPolicyTester =
                 new LengthPasswordPolicyTester(passwordPolicyTester);
 
         return passwordPolicyTester;
